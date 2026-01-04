@@ -31,5 +31,5 @@ The rewards are :
 To generate the labyrinths I employed the depth-first search algorithm 
 
 <p align="center">
-  <img src="demo.gif" width="300" alt="Demo">
+  <img src="Assets/DFS_maze_gif.gif" width="300" alt="Demo">
 </p>
