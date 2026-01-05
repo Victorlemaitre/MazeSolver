@@ -78,21 +78,22 @@ Critic head:
 ### How to use this repo :
 To train you own maze solving agent you first have to install the required package with :
 
-'''bash
+```bash
 pip install -r requirement.txt
-'''
+```
 
 Then you need to compile the .pyx files using :
 
-'''bash
+```bash
 python setup.py build_ext --inplace
-'''
+```
 
 Next you can run :
 
-'''bash
+```bash
 python Training.py --model-name "your model name" 
-'''
+```
+
 
 Which will train your agent and record a small .mp4 video if the training succeeds.
 
