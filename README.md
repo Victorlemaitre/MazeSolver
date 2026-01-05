@@ -100,9 +100,9 @@ Which will train your agent and record a small .mp4 video if the training succee
 
 ### Results and limitations :
 
-As you can see in the first gif of this README I was able to train an agent to solve maze of size $13\times 13$ at test time. However I found that training was heavily impacted by the dimensions of the maze. At higher maze size the computational cost of processing large image was becoming too much. Indeed as labyrinths's pixels have a lot of meaning downsizing the image size using higher strides in the convolutions results in worse performance. Moreover bigger maze also means that you train with longer trajectories that requires PPO to process larger inputs. 
+As you can see in the first gif of this README I was able to train an agent to solve maze of size $13\times 13$ at test time. However I found that training was heavily impacted by the dimensions of the maze. At higher maze size the computational cost of processing large image was becoming too much. Indeed as labyrinths's pixels have a lot of meaning, downsizing the image size using higher strides in the convolutions results in worse performance. Moreover bigger maze also means that you train with longer trajectories which requires PPO to process larger inputs. 
 
-Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. 
+Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. If I had a lot more time I would try to implement a [hiearchichal reasoning model](https://arxiv.org/pdf/2506.21734). 
 
 
 
