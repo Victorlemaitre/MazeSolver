@@ -7,7 +7,7 @@ Personal learning project where I trained an agent to solve small, fully observa
 ---
 *Please note that the agent has never seen any of those maze during training*
 <p align="center">
-  <img src="Assets/BaseAssets/Maze13_solve.gif" width="600" alt="Maze13_solve">
+  <img src="BaseAssets/Maze13_solve.gif" width="600" alt="Maze13_solve">
 </p>
 
 
@@ -38,7 +38,7 @@ Positive rewards are very sparse and the other rewards are not directly useful t
 To generate the labyrinths I employed the depth-first search algorithm which you can see in action below :
 
 <p align="center">
-  <img src="Assets/BaseAssets/DFS_maze_gif.gif" width="400" alt="DFS maze">
+  <img src="BaseAssets/DFS_maze_gif.gif" width="400" alt="DFS maze">
 </p>
 
 The starting position is placed randomly and the exit is located at a fixed distance from the start. The distance between exit and start can be controlled to manipulate the difficulty of the maze which is what I will be doing during training.
@@ -80,16 +80,19 @@ To train you own maze solving agent you first have to install the required packa
 
 '''bash
 pip install -r requirement.txt
+'''
 
 Then you need to compile the .pyx files using :
 
 '''bash
 python setup.py build_ext --inplace
+'''
 
 Next you can run :
 
 '''bash
-python Training.py
+python Training.py --model-name "your model name" 
+'''
 
 Which will train your agent and record a small .mp4 video if the training succeeds.
 
