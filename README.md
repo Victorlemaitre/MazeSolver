@@ -7,7 +7,7 @@ Personal learning project where I trained an agent to solve small, fully observa
 ---
 *Please note that the agent has never seen any of those maze during training*
 <p align="center">
-  <img src="Assets/Maze13_solve.gif" width="600" alt="Maze13_solve">
+  <img src="Assets/BaseAssets/Maze13_solve.gif" width="600" alt="Maze13_solve">
 </p>
 
 
@@ -38,7 +38,7 @@ Positive rewards are very sparse and the other rewards are not directly useful t
 To generate the labyrinths I employed the depth-first search algorithm which you can see in action below :
 
 <p align="center">
-  <img src="Assets/DFS_maze_gif.gif" width="400" alt="DFS maze">
+  <img src="Assets/BaseAssets/DFS_maze_gif.gif" width="400" alt="DFS maze">
 </p>
 
 The starting position is placed randomly and the exit is located at a fixed distance from the start. The distance between exit and start can be controlled to manipulate the difficulty of the maze which is what I will be doing during training.
@@ -75,14 +75,33 @@ Actor head:
 Critic head:
 - Linear(final_hidden_size → 1)
 
+### How to use this repo :
+To train you own maze solving agent you first have to install the required package with :
+
+'''bash
+pip install -r requirement.txt
+
+Then you need to compile the .pyx files using :
+
+'''bash
+python setup.py build_ext --inplace
+
+Next you can run :
+
+'''bash
+python Training.py
+
+Which will train your agent and record a small .mp4 video if the training succeeds.
+
+
 ### Results and limitations :
 
 As you can see in the first gif of this README I was able to train an agent to solve maze of size $13\times 13$ at test time. However I found that training was heavily impacted by the dimensions of the maze. At higher maze size the computational cost of processing large image was becoming too much. Indeed as labyrinths's pixels have a lot of meaning downsizing the image size using higher strides in the convolutions results in worse performance. Moreover bigger maze also means that you train with longer trajectories that requires PPO to process larger inputs. 
 
 Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. 
 
-### Notes on this repo :
-This project required a GPU and I do not have one. As a result I used google collab and a single jupyter notebook for most of my experiments. Therefore the repo you see here is just that single notebook splitted into different file for clarity.  
+
+
 
 
 

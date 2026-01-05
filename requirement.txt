@@ -1,0 +1,11 @@
+torch
+numpy
+tqdm
+gymnasium
+cython
+setuptools
+matplotlib
+imageio[ffmpeg]
+argparse
+
+
