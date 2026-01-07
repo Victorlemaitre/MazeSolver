@@ -16,7 +16,7 @@ Personal learning project where I trained an agent to solve small, fully observa
 
 Following my first semester in the [Master IASD](https://www.masteriasd.eu/en/) program, I felt like my course in RL was too theoretical hence I took the goal to implement policy gradient algorithms such as REINFORCE, A2C and PPO during the Christmas holidays. 
 
-Initially I implemented a small grid world in a custom gym environment where you would design the grid yourself by placing the agent starting position, the walls and the rewards. However I found that the task was made either trivial or almost impossible depending on the grid design. I also disliked the idea that the agent was not reasoning but merely overfitting to a particular grid design. To solve that last problem I would have needed to generate a lot of new grids which I could not therefore I set out to solve small maze as they can be efficiently generated.
+Initially I implemented a small grid world in a custom gym environment where you would design the grid yourself by placing the agent starting position, the walls and the rewards. However I found that the task was made either trivial or almost impossible depending on the grid design. I also disliked the idea that the agent was not reasoning but merely overfitting to a particular grid design. To solve that last problem I would have needed to generate a lot of new grids which I could not. Therefore I set out to solve small mazes as their generation could be automatized.
 
 ### Environment description :
 
@@ -45,7 +45,7 @@ The starting position is placed randomly and the exit is located at a fixed dist
 
 To force generalization a new maze is generated at every reset.
 
-To generate the environment I started with gymnasium and used its vectorized utilities. However I realized that speed was going to be an issue during training. As a result I stepped out of gymnasium entirely and implemented everything in cython including the handling of vectorized environments. This brought a few change to the training loop. For instance, now for performance purposes the observations, rewards are updated in place. These optimizations made the simulation cost negligible (On my average laptop it can run at well above 100K steps/second). To give you an idea of the effectiveness of cython, the pure python maze generation algorithm can generate about 3K/second $13\times 13$ mazes while the cython version can generate 600K/second of them.
+To generate the environment I started with gymnasium and used its vectorized utilities. However I realized that speed was going to be an issue during training. As a result I stepped out of gymnasium entirely and implemented everything in cython including the handling of vectorized environments. This brought a few change to the training loop. For instance, the observations, rewards as well as termination and truncation signals are now arrays that are updated in place. These optimizations made the simulation cost negligible (On my average laptop it can run at well above 100K steps/second). To give you an idea of the effectiveness of cython, the pure python maze generation algorithm can generate about 3K/second $13\times 13$ mazes while the cython version can generate 600K/second of them.
 Now most of the runtime during training is dedicated to updating the agent's weigths as well as CPU-GPU data transfers.
 
 ### Training algorithm :
