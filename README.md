@@ -16,7 +16,7 @@ Personal learning project where I trained an agent to solve small, fully observa
 
 Following my first semester in the [Master IASD](https://www.masteriasd.eu/en/) program, I felt like my course in RL was too theoretical hence I took the goal to implement policy gradient algorithms such as REINFORCE, A2C and PPO during the Christmas holidays. 
 
-Initially I implemented a small grid world in a custom gym environment where you would design the grid yourself by placing the agent starting position, the walls and the rewards. However I found that the task was made either trivial or almost impossible depending on the grid design. I also disliked the idea that the agent was not reasoning but was merely overfitting to a particular grid design. To solve that last problem I would have need to generate a lot of new grids which I could not therefore I set out to solve small maze as they can be efficiently generated.
+Initially I implemented a small grid world in a custom gym environment where you would design the grid yourself by placing the agent starting position, the walls and the rewards. However I found that the task was made either trivial or almost impossible depending on the grid design. I also disliked the idea that the agent was not reasoning but merely overfitting to a particular grid design. To solve that last problem I would have needed to generate a lot of new grids which I could not therefore I set out to solve small maze as they can be efficiently generated.
 
 ### Environment description :
 
@@ -102,7 +102,7 @@ Which will train your agent and record a small .mp4 video if the training succee
 
 As you can see in the first gif of this README I was able to train an agent to solve maze of size $13\times 13$ at test time. However I found that training was heavily impacted by the dimensions of the maze. At higher maze size the computational cost of processing large image was becoming too much. Indeed as labyrinths's pixels have a lot of meaning, downsizing the image size using higher strides in the convolutions results in worse performance. Moreover bigger maze also means that you train with longer trajectories which requires PPO to process larger inputs. 
 
-Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. If I had a lot more time I would try to implement a [hiearchichal reasoning model](https://arxiv.org/pdf/2506.21734). 
+Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. If I had a lot more time I would try to implement a [hiearchichal reasoning model](https://arxiv.org/pdf/2506.21734).
 
 
 
