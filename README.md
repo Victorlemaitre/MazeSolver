@@ -46,11 +46,11 @@ The starting position is placed randomly and the exit is located at a fixed dist
 To force generalization a new maze is generated at every reset.
 
 To generate the environment I started with gymnasium and used its vectorized utilities. However I realized that speed was going to be an issue during training. As a result I stepped out of gymnasium entirely and implemented everything in cython including the handling of vectorized environments. This brought a few change to the training loop. For instance, the observations, rewards as well as termination and truncation signals are now arrays that are updated in place. These optimizations made the simulation cost negligible (On my average laptop it can run at well above 100K steps/second). To give you an idea of the effectiveness of cython, the pure python maze generation algorithm can generate about 3K/second $13\times 13$ mazes while the cython version can generate 600K/second of them.
-Now most of the runtime during training is dedicated to updating the agent's weigths as well as CPU-GPU data transfers.
+Now most of the runtime during training is dedicated to updating the agent's weights as well as CPU-GPU data transfers.
 
 ### Training algorithm :
 
-I used PPO which I implemented in pytorch inspiring myself from  Clean RL's [implementation](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py). Handling the mask logic in GAE as well as the reset of vectorized environments was quite tricky and not something I'd like to redo during holidays but alas it is done now and the agent is learning. 
+I implemented PPO and GAE in PyTorch, using CleanRL's [implementation](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py) as a reference. Handling the mask logic in GAE as well as the reset of vectorized environments was quite tricky and not something I'd like to redo during holidays but alas it is done now and the agent is learning. 
 
 During training I kept track of the average length needed for the agent to reach the exit. If it was close to perfect I incremented the distance between exit and start. This helped alleviate the sparsity of the rewards.
 
@@ -102,7 +102,7 @@ Which will train your agent and record a small .mp4 video if the training succee
 
 As you can see in the first gif of this README I was able to train an agent to solve maze of size $13\times 13$ at test time. However I found that training was heavily impacted by the dimensions of the maze. At higher maze size the computational cost of processing large image was becoming too much. Indeed as labyrinths's pixels have a lot of meaning, downsizing the image size using higher strides in the convolutions results in worse performance. Moreover bigger maze also means that you train with longer trajectories which requires PPO to process larger inputs. 
 
-Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. If I had a lot more time I would try to implement a [hiearchichal reasoning model](https://arxiv.org/pdf/2506.21734).
+Looking back I realize that maybe policy gradient algorithms or just CNN were not the best fit for this tasks as their inductive bias do not align well with the highly structured nature of labyrinths. If I had a lot more time I would try to implement a [hierarchichal reasoning model](https://arxiv.org/pdf/2506.21734).
 
 
 
