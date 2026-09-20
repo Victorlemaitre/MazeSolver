@@ -10,7 +10,7 @@ import argparse
 parser = argparse.ArgumentParser(description="PPO training on MazeWorld")
 
 # --- General / IO ---
-parser.add_argument("--model-name", type=str, default="model.pth")
+parser.add_argument("--model-name", type=str, default="model")
 
 # --- Environment ---
 parser.add_argument("--maze-size", type=int, default=7)
