@@ -1,2 +1,7 @@
 build/
 __pycache__/
+*.pyc
+*.so
+
+MazeGenerator_cython.c
+MazeWorld_cython.c

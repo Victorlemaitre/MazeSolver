@@ -79,7 +79,9 @@ Critic head:
 To train you own maze solving agent you first have to install the required package with :
 
 ```bash
-pip install -r requirement.txt
+python3 -m venv mazesolver_env
+source mazesolver_env/bin/activate
+pip install -r requirements.txt
 ```
 
 Then you need to compile the .pyx files using :

@@ -258,7 +258,8 @@ if __name__ == '__main__':
         n_steps_per_update = STEPS_PER_UPDATE,
         terminated = ep_terminated,
         truncated = ep_truncated,
-        reward = ep_rewards_np
+        reward = ep_rewards_np,
+        seed=SEED,
         )
 
     env_video.reset()
