@@ -39,7 +39,18 @@ cdef class MazeWorld_cython():
 
 
 
-    def  __cinit__(self, int num_envs, int maze_size, int init_nb_step_end, int max_step, int n_steps_per_update, uint8[:,::1] terminated, uint8[:,::1] truncated, float32[:,::1] reward):
+    def  __cinit__(
+        self, 
+        int num_envs, 
+        int maze_size, 
+        int init_nb_step_end, 
+        int max_step, 
+        int n_steps_per_update, 
+        uint8[:,::1] terminated, 
+        uint8[:,::1] truncated, 
+        float32[:,::1] reward, 
+        unsigned int seed,
+    ):
         self.num_envs = num_envs
         self.maze_size = maze_size
         self.max_step = max_step
@@ -60,19 +71,36 @@ cdef class MazeWorld_cython():
         self.grid = self._grid_arr
         self.step_count = self._step_count_arr
 
-    def __init__(self, int num_envs, int maze_size, int init_nb_step_end, int max_step, int n_steps_per_update, uint8[:,::1] terminated, uint8[:,::1] truncated, float32[:, ::1] reward):
+    def __init__(
+        self, 
+        int num_envs, 
+        int maze_size, 
+        int init_nb_step_end, 
+        int max_step, 
+        int n_steps_per_update, 
+        uint8[:,::1] terminated, 
+        uint8[:,::1] truncated, 
+        float32[:, ::1] reward,
+        unsigned int seed,
+    ):
         super().__init__()
         assert num_envs > 0
         assert maze_size > 5
         assert init_nb_step_end > 0
         assert max_step > 1
         assert n_steps_per_update > 0
-        assert terminated.shape[0] == n_steps_per_update and terminated.shape[1] == num_envs and terminated.ndim == 2 # we disabled the boundary checks so we need to be extra careful
+        # We disabled the boundary checks so we need to be extra careful
+        assert terminated.shape[0] == n_steps_per_update and terminated.shape[1] == num_envs and terminated.ndim == 2 
         assert truncated.shape[0] == n_steps_per_update and truncated.shape[1] == num_envs and truncated.ndim == 2
         assert reward.shape[0] == n_steps_per_update and reward.shape[1] == num_envs and reward.ndim == 2
 
     cpdef void set_difficulty(self, int nb_end_steps):
-        self.maze_generator = MazeGenerator_cython(self.maze_size, nb_end_steps)
+        cdef unsigned int current_seed = self.maze_generator.seed
+        self.maze_generator = MazeGenerator_cython(
+            self.maze_size,
+            nb_end_steps,
+            seed=current_seed
+        )
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -102,7 +130,8 @@ cdef class MazeWorld_cython():
         cdef int e
         cdef int nx,ny
         cdef int x,y
-        cdef int current_step = self.current_step # idx used to update in place the terminated, truncated and reward arrays. To understand its role look at the training loop
+        # idx used to update in place the terminated, truncated and reward arrays. To understand its role look at the training loop
+        cdef int current_step = self.current_step 
         cdef uint8[:,::1] terminated = self.terminated
         cdef uint8[:,::1] truncated  = self.truncated
         cdef float32[:,::1] reward   = self.reward

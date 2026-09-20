@@ -18,6 +18,7 @@ parser.add_argument("--num-envs", type=int, default=10)
 parser.add_argument("--max-steps-per-episode", type=int, default=64)
 parser.add_argument("--nb-channels", type=int, default=4)
 parser.add_argument("--init-nb-end-steps", type=int, default=2)
+parser.add_argument("--seed", type=int, default=42)
 
 # --- Training loop ---
 parser.add_argument("--n-updates", type=int, default=5000)
@@ -35,6 +36,10 @@ parser.add_argument("--n-passes", type=int, default=3)
 parser.add_argument("--critic-coeff", type=float, default=1.0)
 
 args = parser.parse_args()
+
+SEED = args.seed
+np.random.seed(SEED)
+torch.manual_seed(SEED)
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 tqdm.write(f"Using : {device}")
@@ -88,6 +93,7 @@ if __name__ == '__main__':
         terminated=ep_terminated,
         truncated=ep_truncated,
         reward=ep_rewards_np,
+        seed=SEED,
     )
 
     # =========================
