@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from torch import Tensor,device
+from torch import Tensor
 from torch.optim import AdamW
 from torch.optim.lr_scheduler import StepLR
 
@@ -10,7 +9,7 @@ class PPO_agent(nn.Module):
             self, *,
             maze_size : int,
             nb_channel : int,
-            device : torch.device = device,
+            device : torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu"),
             learning_rate : float = 1e-3,
             batch_size : int = 256,
             gamma : float = 0.99,
@@ -49,7 +48,7 @@ class PPO_agent(nn.Module):
 
         final_hidden_size = 256
 
-        self.backbone = self.backbone = nn.Sequential(
+        self.backbone = nn.Sequential(
             nn.Conv2d(self.nb_channel, 32, 3, padding=0), #padding 0 cause the image is already padded
             nn.ReLU(),
             nn.Conv2d(32, 64, 3, stride=1, padding=1),
